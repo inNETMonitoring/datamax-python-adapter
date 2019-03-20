@@ -31,7 +31,7 @@ class DPLPrinter:
         while len(y_pos) < 4:
             y_pos = '0' + y_pos
 
-        data = str(rotation) + str(9) + str(width_multiplier) + str(height_multiplier) + font_id + x_pos + y_pos + \
+        data = str(rotation) + str(9) + str(width_multiplier) + str(height_multiplier) + font_id + y_pos + x_pos + \
                text + '\n'
 
         print('Sent: ' + data)
