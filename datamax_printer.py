@@ -1,4 +1,4 @@
-import win32print
+import socket
 
 
 class DPLPrinter:
@@ -7,15 +7,14 @@ class DPLPrinter:
 
     command_mode = True
 
-    def __init__(self, printer_name, document_name='datamax printer'):
-        self.printer = win32print.OpenPrinter(printer_name)
-        self.document_name = document_name
-        win32print.StartDocPrinter(self.printer, 1, (document_name, None, 'RAW'))
-        win32print.StartPagePrinter(self.printer)
+    def __init__(self, printer_ip, printer_port=9100):
+        self.printer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.connection_info = (printer_ip, printer_port)
+        self.printer.connect(self.connection_info)
 
     def __send_to_printer(self, command: str):
         print('Sent: ' + command)
-        return win32print.WritePrinter(self.printer, command.encode('ASCII'))
+        return self.printer.send(command.encode('ASCII'))
 
     def __send_font(self, rotation: int, width_multiplier: int, height_multiplier: int, font_id: int, x_pos: int,
                     y_pos: int, text: str):
@@ -36,7 +35,7 @@ class DPLPrinter:
                text + '\n'
 
         print('Sent: ' + data)
-        return win32print.WritePrinter(self.printer, data.encode('ASCII'))
+        return self.printer.send(data.encode('ASCII'))
 
     def start_document(self):
         if not self.command_mode:
@@ -66,16 +65,13 @@ class DPLPrinter:
 
     def print(self):
         self.__send_to_printer('E')
-        win32print.EndDocPrinter(self.printer)
-        win32print.StartDocPrinter(self.printer, 1, (self.document_name, None, 'RAW'))
-        win32print.StartPagePrinter(self.printer)
 
 
 def main():
-    printer = DPLPrinter('Datamax Text Interface')
+    printer = DPLPrinter('10.0.50.111')
     printer.configure()
     printer.start_document()
-    printer.set_text(10, 20, 'Hallo Welt', 80, 1)
+    printer.set_text(10, 50, 'Hallo UNIX', 80, 1)
     printer.print()
 
 
