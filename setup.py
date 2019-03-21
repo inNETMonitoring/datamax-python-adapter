@@ -14,8 +14,12 @@ setuptools.setup(
     url='https://github.com/inNETMonitoring/datamax-python-adapter',
     packages=setuptools.find_packages(),
     classifiers=[
-        "Programming Language :: Python :: 3.6",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent"
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Manufacturing',
+        'Programming Language :: Python :: 3.6',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Topic :: Software Development :: Libraries'
     ]
 )
