@@ -62,8 +62,10 @@ class DPLPrinter:
         :param x_pos: Position of the text label on the X-Axis (in 0.1mm)
         :param y_pos: Position of the text label on the Y-Axis (in 0.1mm)
         :param text: The text to print
-        :param font_id:
-        :param font_size:
+        :param font_id: The font ID (1 - 9). Please refer to the DPL Manual Appendix C for examples.
+        :param font_size: If you are a monospaced font (1-8) this value is a tuple containig the factors to multiply
+        width and the height (width_multiplier, height_multiplier). Values 1-9 are supported.
+        In case you use the CG Triumvirate font (ID = 9) this value is the font size in pt.
         :return: Number of bytes sent to the printer
         """
         if self.command_mode:
@@ -123,16 +125,3 @@ class DPLPrinter:
 
     def print(self):
         self.__send_to_printer('E')
-
-
-def main():
-    printer = DPLPrinter('10.0.50.111')
-    printer.configure()
-    printer.start_document()
-    printer.set_qr_code(285, 120, 'https://www.innetag.ch/', 9)
-    printer.set_label(300, 60, 'innetag.ch', 9, 10)
-    printer.print()
-
-
-if __name__ == '__main__':
-    main()
