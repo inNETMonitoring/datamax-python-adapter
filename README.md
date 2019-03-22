@@ -10,7 +10,7 @@ contribute.
 ## Install
 
 ```bash
-$ pip install datamax_printer
+$ pip install datamax-printer
 ```
 
 or from source:
