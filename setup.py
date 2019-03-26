@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='datamax_printer',
-    version='0.1.0',
+    version='0.1.1',
     author='Michael Blättler',
     author_email='michael.blaettler@innetag.ch',
     description='Controll a datamax o\'neil labelprinter using DPL',
