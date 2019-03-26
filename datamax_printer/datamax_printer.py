@@ -125,3 +125,4 @@ class DPLPrinter:
 
     def print(self):
         self.__send_to_printer('E')
+        self.command_mode = True  # After sending E, the printer switches bach to command mode
