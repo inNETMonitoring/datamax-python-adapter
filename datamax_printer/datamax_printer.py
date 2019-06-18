@@ -29,7 +29,7 @@ class DPLPrinter:
         if not self.command_mode:
             raise RuntimeError('Already in label formatting mode')
         success = False
-        if self.command_mode and self.__send_to_printer(f'{self.STX}L') == 2:
+        if self.command_mode and self.__send_to_printer('{STX}L'.format(STX=self.STX)) == 2:
             self.__send_to_printer('D11\x0D')
             self.command_mode = False
             success = True
@@ -48,14 +48,14 @@ class DPLPrinter:
         if not self.command_mode:
             raise RuntimeError('Cannot configure printer label formatting mode')
         if imperial:
-            self.__send_to_printer(f'{self.STX}n')
+            self.__send_to_printer('{STX}n'.format(STX=self.STX))
         else:
-            self.__send_to_printer(f'{self.STX}m')
+            self.__send_to_printer('{STX}m'.format(STX=self.STX))
 
         sop = str(border_bottom)
         while len(sop) < 4:
             sop = '0' + sop
-        self.__send_to_printer(f'{self.STX}O{sop}')
+        self.__send_to_printer('{STX}O{sop}'.format(STX=self.STX, sop=sop))
 
     def set_label(self, x_pos, y_pos, text, font_id, font_size, rotation=0):
         """
@@ -120,7 +120,10 @@ class DPLPrinter:
         if size > 9:
             size = chr(ord('A') + (size - 10))
 
-        command = f'1W1d{size}{size}000{y_pos}{x_pos}{data}\x0D\x0D'
+        command = '1W1d{size}{size}000{y_pos}{x_pos}{data}\x0D\x0D'.format(size=size,
+                                                                           y_pos=y_pos,
+                                                                           x_pos=x_pos,
+                                                                           data=data)
         return self.__send_to_printer(command)
 
     def print(self):
