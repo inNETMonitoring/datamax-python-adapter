@@ -122,6 +122,37 @@ class DPLPrinter:
 
         command = f'1W1d{size}{size}000{y_pos}{x_pos}{data}\x0D\x0D'
         return self.__send_to_printer(command)
+    
+    def set_barcode(self, x_pos, y_pos, data, size=000, additional_num):
+        """
+        Generates a 3of9 Barcode with a 3:1 ratio
+        :param additional_num: 1 to add number to bottom of barcode, 0 to have no number
+        :param x_pos: Position of the barCode on the X-Axis (in 0.1mm)
+        :param y_pos: Position of the barCode on the Y-Axis (in 0.1mm)
+        :param size: height of barcode(in 0.1mm) enter 000 for default (.245mm)
+        :param data: Data to be encoded in the barcode.
+        (Numeric Data, Alphanumeric Data, - . * $ / + % and the space character.)
+        :return: Number of bytes sent to the printer
+        """
+        if self.command_mode:
+            raise RuntimeError('Cannot print Barcode in command mode')
+        x_pos = str(x_pos)
+        while len(x_pos) < 4:
+            x_pos = '0' + x_pos
+
+        y_pos = str(y_pos)
+        while len(y_pos) < 4:
+            y_pos = '0' + y_pos
+        
+        if additional_num = 0:
+            additional_num = "a"
+        elif additional_num = 1:
+            additional_num = "A"
+        else:
+            raise RuntimeError('parameter "additional_num" must either be 0 or 1')
+
+        command = f'1{additional_num}62{size}{y_pos}{x_pos}{data}\x0D\x0D'
+        return self.__send_to_printer(command)
 
     def print(self):
         self.__send_to_printer('E')
