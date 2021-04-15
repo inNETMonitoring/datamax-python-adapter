@@ -143,7 +143,7 @@ class DPLPrinter:
             additional_info = "A"
         else:
             raise RuntimeError('parameter "additional_info" must either be 0 or 1')
-        command = f'1{additional_info}00{size}{y_pos}{x_pos}{data}\x0D\x0D'
+        command = f'1{additional_info}42{size}{y_pos}{x_pos}{data}\x0D\x0D'
         return self.__send_to_printer(command)
         
 
