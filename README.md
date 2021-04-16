@@ -4,7 +4,7 @@ This piece of code allows you to control a datamax-o'neil label printer. You do 
 programming language for simple tasks, this module takes care of it.
 
 The module was developed and tested on python 3.6 using a datamax o'neil e-class mark III printer. It still has very
-limited functionality allowing you to print text labels and QR-codes. In case you need any other features feel free to
+limited functionality allowing you to print text labels,QR-codes and Barcodes. In case you need any other features feel free to
 contribute.
 
 ## Install
@@ -29,6 +29,7 @@ printer.configure()
 printer.start_document()
 printer.set_qr_code(285, 120, 'https://www.innetag.ch/', 9)
 printer.set_label(300, 60, 'innetag.ch', 9, 10)
+printer.set_barcode('0266','0025','1039001234',1)
 printer.print()
 ```
 
